@@ -1080,28 +1080,32 @@
         }, 400);
     });
 
-    function handleCancelByToken(token) {
-        document.querySelector('.page-wrap').innerHTML = '<div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center;font-family:Noto Sans TC,sans-serif;"><div id="cancelStatus"><div style="font-size:2rem;margin-bottom:16px;">⏳</div><div style="font-size:1rem;color:#7a6e68;">取消確認中，請稍候…</div></div></div>';
+function handleCancelByToken(token) {
+    document.querySelector('.page-wrap').innerHTML = '<div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center;font-family:Noto Sans TC,sans-serif;"><div id="cancelStatus"><div style="font-size:2.5rem;margin-bottom:16px;">🗓️</div><div style="font-size:1.1rem;font-weight:600;color:#2c2420;margin-bottom:8px;">確認取消預約？</div><p style="font-size:0.9rem;color:#7a6e68;line-height:1.7;margin-bottom:8px;">此操作無法復原，請確認您要取消這筆預約。</p><p style="font-size:0.85rem;color:#999;line-height:1.6;margin-bottom:24px;">⚠️ 用餐前 4 小時內無法自助取消<br>如需協助請致電 <a href="tel:034826657" style="color:#8c2525;">03-482-6657</a></p><div style="display:flex;gap:12px;justify-content:center;"><button onclick="doCancel(\'' + token + '\')" style="background:#8c2525;color:white;border:none;border-radius:10px;padding:12px 24px;font-size:0.95rem;font-weight:600;cursor:pointer;">確認取消</button><button onclick="location.href=\'https://jiheruixi4826657.github.io/jiheruixi/\'" style="background:#eee;color:#333;border:none;border-radius:10px;padding:12px 24px;font-size:0.95rem;font-weight:600;cursor:pointer;">返回</button></div></div></div>';
+}
 
-        var url = API_URL + '?action=cancelByToken&token=' + encodeURIComponent(token);
-        fetch(url)
-        .then(function(r) { return r.json(); })
-        .then(function(res) {
-            var box = document.getElementById('cancelStatus');
-            if (res.status === 'success') {
-box.innerHTML = '<div style="font-size:3rem;margin-bottom:16px;">✅</div><div style="font-size:1.2rem;font-weight:600;color:#2c2420;margin-bottom:8px;">預約已取消</div><div style="font-size:0.9rem;color:#7a6e68;line-height:1.7;margin-bottom:24px;">' + esc(res.name) + ' 您好<br>' + esc(res.date) + ' ' + esc(res.slot) + ' 的預約已成功取消。</div><a href="https://jiheruixi4826657.github.io/jiheruixi/" style="display:inline-block;background:#8c2525;color:white;text-decoration:none;padding:12px 28px;border-radius:12px;font-size:0.95rem;font-weight:600;">重新預約</a>';
-            } else if (res.status === 'too_late') {
-                box.innerHTML = '<div style="font-size:3rem;margin-bottom:16px;">⚠️</div><div style="font-size:1.1rem;font-weight:600;color:#8c2525;margin-bottom:8px;">無法自助取消</div><div style="font-size:0.9rem;color:#7a6e68;line-height:1.7;margin-bottom:24px;">用餐前 4 小時內無法自助取消<br>請直接來電聯絡我們</div><a href="tel:034826657" style="display:inline-block;background:#8c2525;color:white;text-decoration:none;padding:12px 28px;border-radius:12px;font-size:0.95rem;font-weight:600;">📞 03-482-6657</a>';
-            } else if (res.status === 'already_cancelled') {
-                box.innerHTML = '<div style="font-size:3rem;margin-bottom:16px;">ℹ️</div><div style="font-size:1.1rem;font-weight:600;color:#2c2420;margin-bottom:8px;">此預約已取消</div><div style="font-size:0.9rem;color:#7a6e68;margin-bottom:24px;">這筆預約先前已經取消了。</div><a href="https://jiheruixi4826657.github.io/jiheruixi/" style="display:inline-block;background:#8c2525;color:white;text-decoration:none;padding:12px 28px;border-radius:12px;font-size:0.95rem;font-weight:600;">重新預約</a>';
-            } else {
-                box.innerHTML = '<div style="font-size:3rem;margin-bottom:16px;">❌</div><div style="font-size:1.1rem;font-weight:600;color:#8c2525;margin-bottom:8px;">取消失敗</div><div style="font-size:0.9rem;color:#7a6e68;line-height:1.7;margin-bottom:24px;">找不到此預約紀錄<br>如需協助請來電</div><a href="tel:034826657" style="display:inline-block;background:#8c2525;color:white;text-decoration:none;padding:12px 28px;border-radius:12px;font-size:0.95rem;font-weight:600;">📞 03-482-6657</a>';
-            }
-        })
-        .catch(function() {
-            document.getElementById('cancelStatus').innerHTML = '<div style="font-size:3rem;margin-bottom:16px;">❌</div><div style="font-size:1rem;color:#8c2525;">網路錯誤，請稍後再試或來電 03-482-6657</div>';
-        });
-    }
+function doCancel(token) {
+    document.getElementById('cancelStatus').innerHTML = '<div style="font-size:2rem;margin-bottom:16px;">⏳</div><div style="font-size:1rem;color:#7a6e68;">取消中，請稍候…</div>';
+
+    var url = API_URL + '?action=cancelByToken&token=' + encodeURIComponent(token);
+    fetch(url)
+    .then(function(r) { return r.json(); })
+    .then(function(res) {
+        var box = document.getElementById('cancelStatus');
+        if (res.status === 'success') {
+            box.innerHTML = '<div style="font-size:3rem;margin-bottom:16px;">✅</div><div style="font-size:1.2rem;font-weight:600;color:#2c2420;margin-bottom:8px;">預約已取消</div><div style="font-size:0.9rem;color:#7a6e68;line-height:1.7;margin-bottom:24px;">' + esc(res.name) + ' 您好<br>' + esc(res.date) + ' ' + esc(res.slot) + ' 的預約已成功取消。</div><a href="https://jiheruixi4826657.github.io/jiheruixi/" style="display:inline-block;background:#8c2525;color:white;text-decoration:none;padding:12px 28px;border-radius:12px;font-size:0.95rem;font-weight:600;">重新預約</a>';
+        } else if (res.status === 'too_late') {
+            box.innerHTML = '<div style="font-size:3rem;margin-bottom:16px;">⚠️</div><div style="font-size:1.1rem;font-weight:600;color:#8c2525;margin-bottom:8px;">無法自助取消</div><div style="font-size:0.9rem;color:#7a6e68;line-height:1.7;margin-bottom:24px;">用餐前 4 小時內無法自助取消<br>請直接來電聯絡我們</div><a href="tel:034826657" style="display:inline-block;background:#8c2525;color:white;text-decoration:none;padding:12px 28px;border-radius:12px;font-size:0.95rem;font-weight:600;">📞 03-482-6657</a>';
+        } else if (res.status === 'already_cancelled') {
+            box.innerHTML = '<div style="font-size:3rem;margin-bottom:16px;">ℹ️</div><div style="font-size:1.1rem;font-weight:600;color:#2c2420;margin-bottom:8px;">此預約已取消</div><div style="font-size:0.9rem;color:#7a6e68;margin-bottom:24px;">這筆預約先前已經取消了。</div><a href="https://jiheruixi4826657.github.io/jiheruixi/" style="display:inline-block;background:#8c2525;color:white;text-decoration:none;padding:12px 28px;border-radius:12px;font-size:0.95rem;font-weight:600;">重新預約</a>';
+        } else {
+            box.innerHTML = '<div style="font-size:3rem;margin-bottom:16px;">❌</div><div style="font-size:1.1rem;font-weight:600;color:#8c2525;margin-bottom:8px;">取消失敗</div><div style="font-size:0.9rem;color:#7a6e68;line-height:1.7;margin-bottom:24px;">找不到此預約紀錄<br>如需協助請來電</div><a href="tel:034826657" style="display:inline-block;background:#8c2525;color:white;text-decoration:none;padding:12px 28px;border-radius:12px;font-size:0.95rem;font-weight:600;">📞 03-482-6657</a>';
+        }
+    })
+    .catch(function() {
+        document.getElementById('cancelStatus').innerHTML = '<div style="font-size:3rem;margin-bottom:16px;">❌</div><div style="font-size:1rem;color:#8c2525;">網路錯誤，請稍後再試或來電 03-482-6657</div>';
+    });
+}
 </script>
 </body>
 </html>
