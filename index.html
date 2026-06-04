@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>極禾優質鍋物—楊梅瑞溪店｜線上預約申請</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #8c2525;
+            --primary-dark: #6b1b1b;
+            --primary-light: #b03030;
+            --gold: #c9a84c;
+            --gold-light: #e8d49e;
+            --bg: #faf7f2;
+            --card: #ffffff;
+            --text: #2c2420;
+            --text-muted: #7a6e68;
+            --border: #e8dfd4;
+            --success: #06C755;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Noto Sans TC', sans-serif;
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                radial-gradient(ellipse 80% 50% at 20% -10%, rgba(140,37,37,0.07) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 40% at 80% 110%, rgba(201,168,76,0.06) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .page-wrap {
+            position: relative;
+            z-index: 1;
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 24px 16px 60px;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 48px 24px 40px;
+            position: relative;
+            margin-bottom: 4px;
+        }
+
+        .hero-logo { width: 200px; margin: 0 auto 16px; }
+        .hero-logo img {
+            width: 100%;
+            display: block;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.10), 0 2px 8px rgba(201,168,76,0.15);
+        }
+
+        .hero-sub {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .hero-sub::before, .hero-sub::after {
+            content: '';
+            width: 28px;
+            height: 1px;
+            background: var(--gold);
+            opacity: 0.6;
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 16px rgba(44,36,32,0.06), 0 1px 4px rgba(44,36,32,0.04);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 20px 14px;
+            border-bottom: 1px solid var(--border);
+        }
+        .card-header-icon {
+            width: 32px; height: 32px;
+            background: rgba(140,37,37,0.08);
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1rem; flex-shrink: 0;
+        }
+        .card-header h2 {
+            font-family: 'Noto Serif TC', serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text);
+            letter-spacing: 0.5px;
+        }
+
+        .info-card { padding: 18px 20px; }
+        .info-row {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            padding: 9px 0;
+            border-bottom: 1px solid #f5f0e8;
+            font-size: 0.88rem;
+        }
+        .info-row:last-child { border-bottom: none; padding-bottom: 0; }
+        .info-row:first-child { padding-top: 0; }
+        .info-icon { font-size: 1rem; flex-shrink: 0; margin-top: 2px; }
+        .info-text { flex: 1; color: var(--text-muted); line-height: 1.6; }
+        .info-text strong { color: var(--text); }
+        .info-text .highlight { color: var(--primary); font-weight: 600; }
+        .info-text a { color: var(--primary); text-decoration: none; font-weight: 600; }
+
+        .times-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 6px; }
+        .time-pill {
+            background: #faf7f2;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 7px 10px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        .time-pill strong { display: block; font-size: 0.75rem; color: var(--primary); margin-bottom: 2px; font-weight: 600; }
+
+        .map-wrap { height: 200px; overflow: hidden; }
+        .map-wrap iframe { width: 100%; height: 100%; border: 0; display: block; }
+
+        .form-body { padding: 20px; display: flex; flex-direction: column; gap: 18px; }
+        .form-group { display: flex; flex-direction: column; gap: 6px; }
+
+        label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text);
+            letter-spacing: 0.3px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        label .lbl-icon { font-size: 0.9rem; }
+        label .lbl-opt { font-weight: 400; color: #bbb; font-size: 0.78rem; }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-family: 'Noto Sans TC', sans-serif;
+            background: #fdfcfa;
+            color: var(--text);
+            transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+            appearance: none;
+            -webkit-appearance: none;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--gold);
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(201,168,76,0.12);
+        }
+        select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23c9a84c' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            padding-right: 38px;
+            cursor: pointer;
+        }
+        textarea { resize: vertical; min-height: 80px; line-height: 1.6; }
+
+        .field-hint { font-size: 0.78rem; min-height: 16px; padding-left: 2px; transition: color 0.2s; }
+        .field-hint.ok  { color: #2a9d2a; }
+        .field-hint.err { color: #c0392b; }
+
+        .btn-submit {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            padding: 16px;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: 'Noto Sans TC', sans-serif;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.15s, opacity 0.2s;
+            letter-spacing: 1.5px;
+            box-shadow: 0 4px 20px rgba(140,37,37,0.3);
+            margin-top: 4px;
+        }
+        .btn-submit:hover:not(:disabled) {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 24px rgba(140,37,37,0.35);
+        }
+        .btn-submit:active:not(:disabled) { transform: translateY(0); }
+        .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; }
+
+        .query-section { padding: 18px 20px; }
+        .query-sub { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px; }
+        .query-row { display: flex; gap: 8px; }
+        .query-row input { flex: 1; padding: 11px 13px; font-size: 0.9rem; border-radius: 10px; }
+        .btn-query {
+            padding: 11px 18px;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            font-family: 'Noto Sans TC', sans-serif;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: background 0.2s;
+        }
+        .btn-query:hover { background: var(--primary-dark); }
+
+        #queryResult { margin-top: 10px; }
+        .qr-item {
+            background: #fdfcfa;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 12px 14px;
+            margin-bottom: 8px;
+        }
+        .qr-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 5px; }
+        .qr-name { font-size: 0.9rem; font-weight: 600; }
+        .qr-detail { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px; }
+        .qr-note { font-size: 0.78rem; color: #aaa; }
+        .qr-time { font-size: 0.72rem; color: #ccc; border-top: 1px solid #f0ece5; margin-top: 6px; padding-top: 6px; }
+        .status-badge {
+            font-size: 0.72rem;
+            padding: 3px 9px;
+            border-radius: 20px;
+            white-space: nowrap;
+            font-weight: 500;
+        }
+
+        .notice-banner {
+            background: linear-gradient(135deg, #fff8f0 0%, #fff3ea 100%);
+            border: 1px solid #f5d9c0;
+            border-radius: 10px;
+            padding: 12px 14px;
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            font-size: 0.83rem;
+            color: #7a4a20;
+            margin-bottom: 4px;
+        }
+        .notice-banner .notice-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(30,20,15,0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            backdrop-filter: blur(6px);
+        }
+        .modal-overlay.show { display: flex; }
+        .modal {
+            background: white;
+            border-radius: 20px;
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+            animation: slideUp 0.35s cubic-bezier(0.34,1.56,0.64,1);
+            overflow: hidden;
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px) scale(0.96); }
+            to   { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .receipt-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 28px 24px 22px;
+            text-align: center;
+            position: relative;
+        }
+        .receipt-header::after {
+            content: '';
+            position: absolute;
+            bottom: -1px; left: 0; right: 0;
+            height: 24px;
+            background: white;
+            clip-path: ellipse(55% 100% at 50% 100%);
+        }
+        .receipt-check {
+            width: 56px; height: 56px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.6rem;
+            margin: 0 auto 12px;
+        }
+        .receipt-header h2 {
+            font-family: 'Noto Serif TC', serif;
+            font-size: 1.15rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+        .receipt-header p { font-size: 0.82rem; opacity: 0.8; }
+
+        .receipt-body { padding: 20px 22px 16px; }
+        .receipt-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 9px 0;
+            border-bottom: 1px dashed #f0ece5;
+            font-size: 0.88rem;
+        }
+        .receipt-row:last-child { border-bottom: none; }
+        .receipt-label { color: var(--text-muted); font-size: 0.8rem; }
+        .receipt-value { font-weight: 600; color: var(--text); }
+
+        .receipt-notice {
+            background: #fff8e1;
+            border-radius: 8px;
+            padding: 10px 12px;
+            font-size: 0.8rem;
+            color: #7a5c00;
+            line-height: 1.6;
+            margin-top: 12px;
+        }
+
+        .receipt-footer { padding: 14px 22px 22px; display: flex; flex-direction: column; gap: 8px; }
+        .btn-line-row { display: flex; gap: 8px; }
+        .btn-line {
+            flex: 1;
+            background: #06C755;
+            color: white;
+            text-decoration: none;
+            padding: 11px 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            font-family: 'Noto Sans TC', sans-serif;
+            border-radius: 10px;
+            text-align: center;
+            display: block;
+            transition: background 0.2s, transform 0.15s;
+        }
+        .btn-line:hover { background: #05a647; transform: translateY(-1px); }
+        .btn-line.gold { background: linear-gradient(135deg, var(--gold) 0%, #a88030 100%); }
+        .btn-line.gold:hover { background: linear-gradient(135deg, #d4a830 0%, #8c6520 100%); }
+        .btn-close-modal {
+            display: block;
+            text-align: center;
+            font-size: 0.82rem;
+            color: #bbb;
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-family: 'Noto Sans TC', sans-serif;
+            padding: 4px;
+        }
+        .btn-close-modal:hover { color: #888; }
+
+        .modal-plain { padding: 32px 26px; text-align: center; }
+        .modal-plain .modal-icon { font-size: 2.2rem; margin-bottom: 12px; }
+        .modal-plain h2 { font-family: 'Noto Serif TC', serif; font-size: 1.1rem; margin-bottom: 10px; color: var(--primary); }
+        .modal-plain p { font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; }
+        .modal-plain a { color: var(--primary); font-weight: 600; text-decoration: none; }
+
+        /* 歡迎彈窗 */
+        .welcome-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(30,20,15,0.75);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            backdrop-filter: blur(8px);
+        }
+        .welcome-overlay.show { display: flex; }
+        .welcome-box {
+            background: white;
+            border-radius: 20px;
+            max-width: 360px;
+            width: 100%;
+            overflow: hidden;
+            box-shadow: 0 24px 64px rgba(0,0,0,0.3);
+            animation: slideUp 0.4s cubic-bezier(0.34,1.56,0.64,1);
+        }
+        .welcome-top {
+            background: linear-gradient(150deg, var(--primary) 0%, #6b1b1b 100%);
+            padding: 28px 22px 22px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .welcome-top::before {
+            content: '🍲';
+            position: absolute;
+            font-size: 8rem;
+            opacity: 0.06;
+            top: -20px; right: -20px;
+        }
+        .welcome-brand {
+            font-family: 'Noto Serif TC', serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: white;
+            letter-spacing: 1.5px;
+            margin-bottom: 3px;
+        }
+        .welcome-tagline { font-size: 0.78rem; color: rgba(255,255,255,0.65); letter-spacing: 0.5px; }
+        .welcome-body { padding: 20px 20px 22px; }
+        .welcome-urgent {
+            background: linear-gradient(135deg, #fff5f5 0%, #fef0f0 100%);
+            border: 1px solid #f5c0c0;
+            border-radius: 12px;
+            padding: 14px 16px;
+            text-align: center;
+            margin-bottom: 14px;
+        }
+        .welcome-urgent p { font-size: 0.85rem; color: #5a1a1a; line-height: 1.7; margin-bottom: 8px; }
+        .tel-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            transition: background 0.2s, transform 0.15s;
+            box-shadow: 0 4px 14px rgba(140,37,37,0.25);
+        }
+        .tel-btn:hover { background: var(--primary-dark); transform: translateY(-1px); }
+        .welcome-line-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            background: #06C755;
+            color: white;
+            text-decoration: none;
+            padding: 12px;
+            font-size: 0.92rem;
+            font-weight: 600;
+            font-family: 'Noto Sans TC', sans-serif;
+            border-radius: 12px;
+            text-align: center;
+            transition: background 0.2s, transform 0.15s;
+            margin-bottom: 12px;
+        }
+        .welcome-line-btn:hover { background: #05a647; transform: translateY(-1px); }
+        .welcome-divider {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            font-size: 0.75rem;
+            color: #ccc;
+        }
+        .welcome-divider::before, .welcome-divider::after {
+            content: ''; flex: 1; height: 1px; background: #eee;
+        }
+        .welcome-form-note {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            text-align: center;
+            line-height: 1.7;
+            margin-bottom: 14px;
+        }
+        .btn-welcome-enter {
+            display: block;
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            padding: 13px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            font-family: 'Noto Sans TC', sans-serif;
+            border-radius: 12px;
+            cursor: pointer;
+            letter-spacing: 0.5px;
+            transition: opacity 0.2s, transform 0.15s;
+            box-shadow: 0 4px 16px rgba(140,37,37,0.25);
+        }
+        .btn-welcome-enter:hover { opacity: 0.92; transform: translateY(-1px); }
+
+        .section-divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 6px 0 14px;
+            font-family: 'Noto Serif TC', serif;
+            font-size: 0.8rem;
+            color: var(--gold);
+            letter-spacing: 1px;
+        }
+        .section-divider::before, .section-divider::after {
+            content: ''; flex: 1; height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold-light), transparent);
+        }
+
+        .page-footer {
+            text-align: center;
+            padding: 24px 0 0;
+            font-size: 0.75rem;
+            color: #c0b8b0;
+        }
+
+        @media (min-width: 640px) {
+            .page-wrap { padding: 32px 24px 80px; }
+            .hero { padding: 56px 32px 44px; }
+            .map-wrap { height: 240px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ── 後台 API 網址（只需改這一行） -->
+<script>
+    var API_URL = 'https://script.google.com/macros/s/AKfycbx2vo2b1y3ge2R88luyVu0rtOc7DhfQb0Dm0BMtGcUbA-8gQ4w3F9bOplVJtFwTA8Ka/exec';
+
+    // 取得 UTM source
+    var urlParams  = new URLSearchParams(window.location.search);
+    var rawSource  = (urlParams.get('utm_source') || '').toLowerCase().trim();
+    var sourceMap  = {
+        'facebook' : 'Facebook',
+        'fb'       : 'Facebook',
+        'instagram': 'Instagram',
+        'ig'       : 'Instagram',
+        'threads'  : 'Threads',
+        'line'     : 'LINE',
+        'google'   : 'Google',
+        'direct'   : '直接'
+    };
+    var utmSource = sourceMap[rawSource] || (rawSource ? rawSource : '直接');
+
+    // 通用 API 呼叫（JSONP 方式，避免 CORS）
+    function callAPI(params, callback) {
+        var qs  = Object.keys(params).map(function(k) {
+            return encodeURIComponent(k) + '=' + encodeURIComponent(
+                typeof params[k] === 'object' ? JSON.stringify(params[k]) : params[k]
+            );
+        }).join('&');
+        var cbName = '_cb_' + Date.now();
+        window[cbName] = function(data) {
+            delete window[cbName];
+            document.head.removeChild(script);
+            callback(data);
+        };
+        var script = document.createElement('script');
+        script.src = API_URL + '?' + qs + '&callback=' + cbName;
+        document.head.appendChild(script);
+    }
+
+    // 提交預約（POST via fetch with no-cors fallback）
+    function submitBookingAPI(data, onSuccess, onError) {
+        var url = API_URL + '?action=submitBooking';
+        fetch(url, {
+            method : 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body   : JSON.stringify(data)
+        })
+        .then(function(r) { return r.json(); })
+        .then(onSuccess)
+        .catch(function() {
+            // fallback: GET 方式
+            var qs = Object.keys(data).map(function(k) {
+                return encodeURIComponent(k) + '=' + encodeURIComponent(data[k]);
+            }).join('&');
+            return fetch(API_URL + '?action=submitBooking&' + qs)
+                   .then(function(r) { return r.json(); })
+                   .then(onSuccess)
+                   .catch(onError);
+        });
+    }
+
+    // 查詢預約
+    function queryBookingAPI(phone, callback) {
+        var url = API_URL + '?action=queryBookingByPhone&phone=' + encodeURIComponent(phone);
+        fetch(url)
+        .then(function(r) { return r.json(); })
+        .then(callback)
+        .catch(function() { callback([]); });
+    }
+</script>
+
+<!-- 歡迎彈窗 -->
+<div class="welcome-overlay" id="welcomeModal">
+    <div class="welcome-box">
+        <div class="welcome-top">
+            <div class="welcome-brand">極禾優質鍋物</div>
+            <div class="welcome-tagline">楊梅瑞溪店｜蔬食自助吧吃到飽</div>
+        </div>
+        <div class="welcome-body">
+            <div class="welcome-urgent">
+                <p>需要預約<strong>今日座位</strong>？<br>請直接來電，立即為您安排！</p>
+                <a href="tel:034826657" class="tel-btn" ontouchstart="">📞 03-482-6657</a>
+            </div>
+            <a href="https://lihi2.me/5K2Pj" target="_blank" class="welcome-line-btn">
+                💬 加入官方 LINE 立即預約
+            </a>
+            <div class="welcome-divider">非當日預約</div>
+            <p class="welcome-form-note">非當日預約可使用線上系統填寫申請，<br>我們將盡快致電確認。</p>
+            <button class="btn-welcome-enter" onclick="closeWelcome()">使用線上預約系統 →</button>
+        </div>
+    </div>
+</div>
+
+<div class="page-wrap">
+
+    <div class="hero">
+        <div class="hero-logo">
+            <img src="logo.jpg" alt="極禾鍋物職人" onerror="this.style.display='none'">
+        </div>
+        <div class="hero-sub">楊梅瑞溪店｜線上預約申請</div>
+    </div>
+
+    <!-- 餐廳資訊 -->
+    <div class="card">
+        <div class="card-header">
+            <div class="card-header-icon">ℹ️</div>
+            <h2>用餐須知</h2>
+        </div>
+        <div class="info-card">
+            <div class="info-row">
+                <span class="info-icon">⏱</span>
+                <div class="info-text">用餐時間限制 <span class="highlight">90 分鐘</span>，請準時入座。</div>
+            </div>
+            <div class="info-row">
+                <span class="info-icon">🕐</span>
+                <div class="info-text">
+                    <strong>預約時段</strong>
+                    <div class="times-grid">
+                        <div class="time-pill"><strong>平日</strong>11:00–13:30 ｜ 17:00–20:30</div>
+                        <div class="time-pill"><strong>假日</strong>11:00–20:30（最晚20:30）</div>
+                    </div>
+                </div>
+            </div>
+            <div class="info-row">
+                <span class="info-icon">⚠️</span>
+                <div class="info-text">送出表單<span class="highlight">非正式預約確認</span>，店家將以<strong>電話聯絡確認</strong>，請保持電話暢通。</div>
+            </div>
+            <div class="info-row">
+                <span class="info-icon">📞</span>
+                <div class="info-text">緊急訂位：<a href="tel:034826657">03-482-6657</a></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 地圖 -->
+    <div class="card">
+        <div class="map-wrap">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3618.7285041301866!2d121.16727397537238!3d24.907240777898796!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x34682500155b4989%3A0x2864165637c37b94!2z5qW156a-5YSq6LOq6Y2L54mp4oCU5qWK5qKF55Ge5rqq5bqX772c6JSs6aOf6Ieq5Yqp5ZCn5ZCD5Yiw6aO9!5e0!3m2!1szh-TW!2stw!4v1779866836076!5m2!1szh-TW!2stw" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+    </div>
+
+    <div class="section-divider">填寫預約資料</div>
+
+    <!-- 預約表單 -->
+    <div class="card">
+        <div class="card-header">
+            <div class="card-header-icon">📝</div>
+            <h2>預約申請表</h2>
+        </div>
+        <div class="form-body" id="bookingFormBody">
+
+            <div class="form-group">
+                <label><span class="lbl-icon">👤</span> 預約姓名</label>
+                <input type="text" id="name" required placeholder="請輸入聯絡人姓名">
+            </div>
+
+            <div class="form-group">
+                <label><span class="lbl-icon">📱</span> 手機號碼</label>
+                <input type="tel" id="phone" required placeholder="0912345678" maxlength="10" inputmode="numeric">
+                <div class="field-hint" id="phoneHint"></div>
+            </div>
+
+            <div class="form-group">
+                <label><span class="lbl-icon">👥</span> 預約人數</label>
+                <select id="people" required>
+                    <option value="" disabled selected>請選擇人數</option>
+                    <option value="1">1 位</option>
+                    <option value="2">2 位</option>
+                    <option value="3">3 位</option>
+                    <option value="4">4 位</option>
+                    <option value="5">5 位</option>
+                    <option value="6">6 位</option>
+                    <option value="7">7 位</option>
+                    <option value="8">8 位</option>
+                    <option value="9+">9 位以上（備註說明）</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label><span class="lbl-icon">📅</span> 預約日期</label>
+                <input type="date" id="date" required>
+            </div>
+
+            <div class="form-group">
+                <label><span class="lbl-icon">🕐</span> 預約時段</label>
+                <select id="time" required disabled>
+                    <option value="" disabled selected>請先選擇預約日期</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label><span class="lbl-icon">✉️</span> Email 信箱 <span class="lbl-opt">選填・確認後寄發通知</span></label>
+                <input type="email" id="email" placeholder="example@gmail.com">
+                <div class="field-hint" id="emailHint"></div>
+            </div>
+
+            <div class="form-group">
+                <label><span class="lbl-icon">📌</span> 備註說明 <span class="lbl-opt">選填</span></label>
+                <textarea id="note" placeholder="兒童椅、慶生、特殊需求…"></textarea>
+            </div>
+
+            <div class="notice-banner">
+                <span class="notice-icon">💡</span>
+                <span>送出後非正式確認，店家將致電確認，請保持電話暢通。</span>
+            </div>
+
+            <button type="button" id="submitBtn" class="btn-submit" onclick="handleSubmit()">
+                <span>送出預約申請</span>
+                <span style="font-size:1.1rem;">→</span>
+            </button>
+
+        </div>
+    </div>
+
+    <!-- 查詢預約 -->
+    <div class="section-divider">查詢預約狀態</div>
+
+    <div class="card">
+        <div class="card-header">
+            <div class="card-header-icon">🔍</div>
+            <h2>查詢我的預約</h2>
+        </div>
+        <div class="query-section">
+            <p class="query-sub">輸入預約時留下的手機號碼</p>
+            <div class="query-row">
+                <input type="tel" id="queryPhone" placeholder="0912345678" maxlength="10" inputmode="numeric"
+                    onkeydown="if(event.key==='Enter')queryBooking()">
+                <button class="btn-query" onclick="queryBooking()">查詢</button>
+            </div>
+            <div id="queryResult"></div>
+        </div>
+    </div>
+
+    <div class="page-footer">© 極禾優質鍋物—楊梅瑞溪店</div>
+
+</div>
+
+<!-- 成功彈窗 -->
+<div class="modal-overlay" id="successModal">
+    <div class="modal">
+        <div class="receipt-header">
+            <div class="receipt-check">✅</div>
+            <h2>預約申請已送出</h2>
+            <p>極禾優質鍋物—楊梅瑞溪店</p>
+        </div>
+        <div class="receipt-body">
+            <div class="receipt-row">
+                <span class="receipt-label">預約姓名</span>
+                <span class="receipt-value" id="rc-name">—</span>
+            </div>
+            <div class="receipt-row">
+                <span class="receipt-label">預約日期</span>
+                <span class="receipt-value" id="rc-date">—</span>
+            </div>
+            <div class="receipt-row">
+                <span class="receipt-label">預約時段</span>
+                <span class="receipt-value" id="rc-time">—</span>
+            </div>
+            <div class="receipt-row">
+                <span class="receipt-label">預約人數</span>
+                <span class="receipt-value" id="rc-people">—</span>
+            </div>
+            <div class="receipt-row">
+                <span class="receipt-label">聯絡電話</span>
+                <span class="receipt-value" id="rc-phone">—</span>
+            </div>
+            <div class="receipt-notice">
+                ⚠️ 此為<strong>申請單</strong>，非正式確認。店家將來電確認座位後方為有效預約，請保持電話暢通。
+                📞 03-482-6657
+            </div>
+        </div>
+        <div class="receipt-footer">
+            <div class="btn-line-row">
+                <a href="https://lihi2.me/5K2Pj" target="_blank" class="btn-line">🎁 週週領訂位禮</a>
+                <a href="https://lihi2.me/5K2Pj" target="_blank" class="btn-line gold">🍲 看菜單</a>
+            </div>
+            <button class="btn-close-modal" id="closeModal">關閉</button>
+        </div>
+    </div>
+</div>
+
+<!-- 重複彈窗 -->
+<div class="modal-overlay" id="dupModal">
+    <div class="modal">
+        <div class="modal-plain">
+            <div class="modal-icon">⚠️</div>
+            <h2>重複預約</h2>
+            <p>此手機號碼已有相同日期與時段的預約申請，請勿重複送出。<br><br>如需變更，請直撥：<a href="tel:034826657">03-482-6657</a></p>
+            <button class="btn-close-modal" id="closeDupModal" style="margin-top:20px;font-size:0.9rem;color:var(--primary);">關閉</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ── 日期初始化
+    var todayStr  = new Date().toLocaleDateString('sv-SE', { timeZone: 'Asia/Taipei' });
+    var dateInput = document.getElementById('date');
+    dateInput.setAttribute('min', todayStr);
+
+    var timeSelect    = document.getElementById('time');
+    var weekdayTimes  = ["11:00","11:30","12:00","12:30","13:00","13:30","17:00","17:30","18:00","18:30","19:00","19:30","20:00","20:30"];
+    var weekendTimes  = ["11:00","11:30","12:00","12:30","13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30","18:00","18:30","19:00","19:30","20:00","20:30"];
+
+    dateInput.addEventListener('change', function() {
+        var val       = this.value;
+        var day       = new Date(val + 'T00:00:00').getDay();
+        var isWeekend = (day === 0 || day === 6);
+        var times     = isWeekend ? weekendTimes : weekdayTimes;
+        var isToday   = (val === todayStr);
+        if (isToday) {
+            var now    = new Date();
+            var nowMin = now.getHours() * 60 + now.getMinutes();
+            times = times.filter(function(t) {
+                var parts = t.split(':').map(Number);
+                return parts[0] * 60 + parts[1] > nowMin + 30;
+            });
+        }
+        timeSelect.innerHTML = '<option value="" disabled selected>請選擇時段</option>';
+        timeSelect.disabled  = false;
+        if (times.length === 0) {
+            timeSelect.innerHTML = '<option value="" disabled selected>今日已無可預約時段</option>';
+        } else {
+            times.forEach(function(t) {
+                var o = document.createElement('option');
+                o.value = t; o.textContent = t;
+                timeSelect.appendChild(o);
+            });
+        }
+    });
+
+    // ── 手機號碼驗證
+    var phoneInput = document.getElementById('phone');
+    var phoneHint  = document.getElementById('phoneHint');
+    phoneInput.addEventListener('input', function() {
+        this.value = this.value.replace(/\D/g, '').slice(0, 10);
+        var v = this.value;
+        if (!v.length) { phoneHint.textContent = ''; phoneHint.className = 'field-hint'; return; }
+        if (v.length === 10 && v.startsWith('09')) {
+            phoneHint.textContent = '✓ 格式正確';
+            phoneHint.className   = 'field-hint ok';
+        } else {
+            phoneHint.textContent = '請輸入 09 開頭的 10 位數字';
+            phoneHint.className   = 'field-hint err';
+        }
+    });
+
+    function setFieldErr(el, msg) {
+        el.style.borderColor = '#c0392b';
+        el.style.boxShadow   = '0 0 0 3px rgba(192,57,43,0.12)';
+        var hint = el.nextElementSibling;
+        if (hint && hint.classList.contains('field-hint')) {
+            hint.textContent = msg;
+            hint.className   = 'field-hint err';
+        }
+        el.focus();
+    }
+    function clearFieldErr(el) { el.style.borderColor = ''; el.style.boxShadow = ''; }
+
+    // ── 表單送出
+    var isSubmitting = false;
+    var submitBtn    = document.getElementById('submitBtn');
+
+    function handleSubmit() {
+        if (isSubmitting) return;
+
+        var nameEl   = document.getElementById('name');
+        var peopleEl = document.getElementById('people');
+        var dateEl   = document.getElementById('date');
+        var phone    = phoneInput.value;
+        var timeVal  = timeSelect.value;
+
+        if (!nameEl.value.trim())    { setFieldErr(nameEl, '請填寫預約姓名'); return; }
+        clearFieldErr(nameEl);
+
+        if (phone.length !== 10 || !phone.startsWith('09')) {
+            phoneHint.textContent = '請輸入正確的手機號碼';
+            phoneHint.className   = 'field-hint err';
+            phoneInput.style.borderColor = '#c0392b';
+            phoneInput.focus(); return;
+        }
+        clearFieldErr(phoneInput);
+
+        if (!peopleEl.value) { setFieldErr(peopleEl, '請選擇預約人數'); return; }
+        clearFieldErr(peopleEl);
+
+        if (!dateEl.value)   { setFieldErr(dateEl, '請選擇預約日期'); return; }
+        clearFieldErr(dateEl);
+
+        if (!timeVal) {
+            timeSelect.style.borderColor = '#c0392b';
+            alert(!dateEl.value ? '請先選擇日期，再選擇時段' : '請選擇預約時段');
+            return;
+        }
+        timeSelect.style.borderColor = '';
+
+        var emailVal = document.getElementById('email').value.trim();
+        if (emailVal && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) {
+            var emailEl = document.getElementById('email');
+            setFieldErr(emailEl, '請輸入正確的 Email 格式');
+            return;
+        }
+
+        isSubmitting            = true;
+        submitBtn.disabled      = true;
+        submitBtn.innerHTML     = '<span>處理中，請稍候…</span>';
+
+        var data = {
+            name  : nameEl.value.trim(),
+            phone : phone,
+            people: peopleEl.value,
+            date  : dateEl.value,
+            time  : timeVal,
+            email : emailVal,
+            source: utmSource,
+            note  : document.getElementById('note').value.trim(),
+            action: 'submitBooking'
+        };
+
+        var apiUrl = API_URL + '?' + Object.keys(data).map(function(k) {
+            return encodeURIComponent(k) + '=' + encodeURIComponent(data[k]);
+        }).join('&');
+
+        fetch(apiUrl)
+        .then(function(r) { return r.json(); })
+        .then(function(res) {
+            isSubmitting        = false;
+            submitBtn.disabled  = false;
+            submitBtn.innerHTML = '<span>送出預約申請</span><span style="font-size:1.1rem;">→</span>';
+
+            if (res.status === 'duplicate') {
+                document.getElementById('dupModal').classList.add('show');
+            } else {
+                document.getElementById('rc-name').textContent   = data.name;
+                document.getElementById('rc-date').textContent   = data.date;
+                document.getElementById('rc-time').textContent   = data.time;
+                document.getElementById('rc-people').textContent = data.people + ' 位';
+                document.getElementById('rc-phone').textContent  = data.phone;
+                document.getElementById('successModal').classList.add('show');
+
+                // 清空表單
+                document.getElementById('name').value  = '';
+                document.getElementById('phone').value = '';
+                document.getElementById('people').value = '';
+                document.getElementById('date').value  = '';
+                document.getElementById('email').value = '';
+                document.getElementById('note').value  = '';
+                timeSelect.innerHTML = '<option value="" disabled selected>請先選擇預約日期</option>';
+                timeSelect.disabled  = true;
+                phoneHint.textContent = '';
+            }
+        })
+        .catch(function(err) {
+            isSubmitting        = false;
+            submitBtn.disabled  = false;
+            submitBtn.innerHTML = '<span>送出預約申請</span><span style="font-size:1.1rem;">→</span>';
+            alert('送出失敗，請稍後再試，或直接致電：03-482-6657\n' + err);
+        });
+    }
+
+    // ── Modal 關閉
+    document.getElementById('closeModal').addEventListener('click', function() {
+        document.getElementById('successModal').classList.remove('show');
+    });
+    document.getElementById('closeDupModal').addEventListener('click', function() {
+        document.getElementById('dupModal').classList.remove('show');
+    });
+
+    // ── 查詢預約
+    function queryBooking() {
+        var phone  = document.getElementById('queryPhone').value.replace(/\D/g, '');
+        var result = document.getElementById('queryResult');
+        if (phone.length !== 10 || !phone.startsWith('09')) {
+            result.innerHTML = '<p style="color:#c0392b;font-size:0.82rem;padding:8px 0;">請輸入正確的 10 位手機號碼</p>';
+            return;
+        }
+        result.innerHTML = '<p style="color:#aaa;font-size:0.82rem;padding:8px 0;">查詢中…</p>';
+
+        var url = API_URL + '?action=queryBookingByPhone&phone=' + encodeURIComponent(phone);
+        fetch(url)
+        .then(function(r) { return r.json(); })
+        .then(function(rows) {
+            if (!rows || rows.length === 0) {
+                result.innerHTML = '<p style="color:#aaa;font-size:0.82rem;padding:10px 0;">查無此電話的預約紀錄</p>';
+                return;
+            }
+            var html = '';
+            rows.forEach(function(r) {
+                var isOk  = r.status.indexOf('已確認') !== -1;
+                var isPen = r.status.indexOf('待') !== -1;
+                var bdrC  = isOk ? '#2a9d2a' : isPen ? '#f59e0b' : '#ccc';
+                var bgC   = isOk ? '#e8f5e9' : isPen ? '#fff8e1' : '#f5f5f5';
+                var txtC  = isOk ? '#2a7a2a' : isPen ? '#b7791f' : '#888';
+                html += '<div class="qr-item" style="border-left:3px solid ' + bdrC + '">'
+                    + '<div class="qr-top"><div>'
+                    + '<div class="qr-name">' + esc(r.name) + '</div>'
+                    + '<div class="qr-detail">' + r.date + '　' + r.slot + '　' + r.people + ' 人</div>'
+                    + '</div>'
+                    + '<span class="status-badge" style="background:' + bgC + ';color:' + txtC + '">' + esc(r.status) + '</span>'
+                    + '</div>'
+                    + (r.note ? '<div class="qr-note">備註：' + esc(r.note) + '</div>' : '')
+                    + '<div class="qr-time">填單時間：' + r.time.substring(0, 16) + '</div>'
+                    + '</div>';
+            });
+            html += '<p style="font-size:0.75rem;color:#bbb;text-align:center;padding-top:4px;">如需變更或取消，請致電 <a href="tel:034826657" style="color:#8c2525;">03-482-6657</a></p>';
+            result.innerHTML = html;
+        })
+        .catch(function() {
+            result.innerHTML = '<p style="color:#c0392b;font-size:0.82rem;padding:8px 0;">查詢失敗，請稍後再試</p>';
+        });
+    }
+
+    function esc(s) {
+        return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    // ── 歡迎彈窗
+    function closeWelcome() {
+        document.getElementById('welcomeModal').classList.remove('show');
+    }
+    window.addEventListener('load', function() {
+        setTimeout(function() {
+            document.getElementById('welcomeModal').classList.add('show');
+        }, 400);
+    });
+</script>
+</body>
+</html>
