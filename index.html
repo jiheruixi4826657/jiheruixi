@@ -52,6 +52,26 @@
         ::-webkit-scrollbar-track { background: var(--bg); }
         ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 
+        /* ── 極光漸層動畫 ── */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            background:
+                radial-gradient(ellipse 80% 50% at 20% 110%, rgba(196,168,130,.07) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 40% at 80% 90%,  rgba(109,184,154,.05) 0%, transparent 50%),
+                radial-gradient(ellipse 50% 60% at 50% 120%, rgba(90,122,170,.06)  0%, transparent 55%);
+            animation: aurora 8s ease-in-out infinite alternate;
+        }
+        @keyframes aurora {
+            0%   { opacity: .6; transform: scale(1)   translateY(0); }
+            50%  { opacity: 1;  transform: scale(1.05) translateY(-10px); }
+            100% { opacity: .7; transform: scale(1)   translateY(5px); }
+        }
+        .page { position: relative; z-index: 1; }
+
         /* ── 微噪點材質覆蓋層 ── */
         body::after {
             content: '';
@@ -104,7 +124,18 @@
             font-size: 0.82rem;
             color: var(--ink-3);
             letter-spacing: .5px;
+            min-height: 1.2em;
         }
+        .hero-sub .cursor {
+            display: inline-block;
+            width: 1px;
+            height: .9em;
+            background: var(--accent);
+            margin-left: 1px;
+            vertical-align: middle;
+            animation: blink .8s step-end infinite;
+        }
+        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
 
         /* ─── Notice Banner ─── */
         .notice {
@@ -267,7 +298,18 @@
         .step-panel { display: none; padding: 24px 20px 20px; }
         .step-panel.active {
             display: block;
-            animation: fadeSlide .22s ease;
+            animation: fadeSlide .25s ease;
+        }
+        /* 卡片高度平滑 */
+        #stepperCard {
+            transition: none;
+        }
+        .step-panel-out {
+            animation: fadeOut .15s ease forwards;
+        }
+        @keyframes fadeOut {
+            from { opacity: 1; transform: translateY(0); }
+            to   { opacity: 0; transform: translateY(-6px); }
         }
         @keyframes fadeSlide {
             from { opacity: 0; transform: translateY(6px); }
@@ -369,28 +411,83 @@
             margin-bottom: 8px;
         }
 
-        .date-input-wrap { position: relative; margin-bottom: 24px; }
-        .date-input-wrap input[type="date"] {
-            width: 100%;
-            height: 52px;
-            border: 1.5px solid var(--border);
-            border-radius: 10px;
-            padding: 0 16px;
-            font-size: 1rem;
-            font-family: 'Noto Sans TC', sans-serif;
+        /* ── 橫向週日曆 ── */
+        .week-cal-wrap { margin-bottom: 24px; }
+        .week-cal-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .wcal-month {
+            font-size: 0.875rem;
+            font-weight: 600;
             color: var(--ink);
+        }
+        .wcal-arrow {
+            width: 32px; height: 32px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
             background: var(--surface-2);
-            appearance: none;
-            -webkit-appearance: none;
+            color: var(--ink-2);
+            font-size: 1rem;
             cursor: pointer;
-            color-scheme: dark;
+            display: flex; align-items: center; justify-content: center;
+            transition: background .15s, color .15s;
+            -webkit-tap-highlight-color: transparent;
         }
-        .date-input-wrap input[type="date"]:focus {
-            outline: none;
-            border-color: var(--accent);
+        .wcal-arrow:hover { background: var(--border); color: var(--ink); }
+        .wcal-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 6px;
+        }
+        .wcal-day {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 8px 2px;
+            border-radius: 10px;
+            border: 1.5px solid transparent;
             background: var(--surface-2);
-            box-shadow: 0 0 0 3px rgba(196,168,130,.15);
+            cursor: pointer;
+            transition: all .15s;
+            -webkit-tap-highlight-color: transparent;
         }
+        .wcal-day:hover:not(.disabled):not(.selected) {
+            border-color: rgba(196,168,130,.4);
+        }
+        .wcal-day.today .wcal-num::after {
+            content: '';
+            display: block;
+            width: 4px; height: 4px;
+            border-radius: 50%;
+            background: var(--accent);
+            margin: 2px auto 0;
+        }
+        .wcal-day.selected {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+        .wcal-day.disabled {
+            opacity: .3;
+            cursor: not-allowed;
+        }
+        .wcal-dow {
+            font-size: 0.62rem;
+            color: var(--ink-3);
+            font-weight: 500;
+            letter-spacing: .3px;
+        }
+        .wcal-day.selected .wcal-dow { color: rgba(26,37,53,.7); }
+        .wcal-num {
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--ink);
+            line-height: 1;
+        }
+        .wcal-day.selected .wcal-num { color: #1A2535; }
 
         /* ─── Summary bar ─── */
         .summary-bar {
@@ -1310,8 +1407,13 @@
 
             <div class="field-label">預約日期</div>
             <div id="date-err" style="display:none;font-size:0.78rem;color:var(--danger);margin-bottom:6px;"></div>
-            <div class="date-input-wrap">
-                <input type="date" id="dateInput">
+            <div class="week-cal-wrap" id="weekCalWrap">
+                <div class="week-cal-nav">
+                    <button class="wcal-arrow" onclick="shiftWeek(-1)">‹</button>
+                    <span class="wcal-month" id="wcalMonth"></span>
+                    <button class="wcal-arrow" onclick="shiftWeek(1)">›</button>
+                </div>
+                <div class="wcal-grid" id="wcalGrid"></div>
             </div>
 
             <div class="btn-row">
@@ -1458,6 +1560,7 @@
             ⚠️ 此為<strong>申請單</strong>，非正式確認。店家將來電確認後方為有效預約，請保持電話暢通。📞 03-482-6657
         </div>
         <div class="modal-footer">
+            <button class="btn btn-primary" id="shareBtn" onclick="shareBooking()" style="margin-bottom:4px;font-size:.875rem;height:46px;">📤 分享預約資訊給朋友</button>
             <div class="btn-line-pair">
                 <a href="https://lihi2.me/5K2Pj" target="_blank" class="btn-line-grn">🎁 週週領訂位禮</a>
                 <a href="https://lihi2.me/5K2Pj" target="_blank" class="btn-line-gold">🍲 看菜單</a>
@@ -1491,6 +1594,74 @@
 <script>
 // ── 狀態 ──
 var state = { people: '', date: '', time: '' };
+
+// ── 週日曆 ──
+var _wcalBase = new Date();  // 本週起始
+_wcalBase.setHours(0,0,0,0);
+
+function getWeekStart(d) {
+    var day = new Date(d);
+    day.setHours(0,0,0,0);
+    return day;
+}
+
+function renderWeekCal() {
+    var grid  = document.getElementById('wcalGrid');
+    var label = document.getElementById('wcalMonth');
+    var dows  = ['日','一','二','三','四','五','六'];
+    var today = new Date(); today.setHours(0,0,0,0);
+    var months = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+
+    // 顯示 7 天
+    var days = [];
+    for (var i = 0; i < 7; i++) {
+        var d = new Date(_wcalBase);
+        d.setDate(d.getDate() + i);
+        days.push(d);
+    }
+
+    // 月份標題
+    var ms = new Set(days.map(function(d){ return d.getMonth(); }));
+    var parts = [];
+    ms.forEach(function(m){ parts.push(days[0].getFullYear() + '年 ' + months[m]); });
+    label.textContent = parts.join(' / ');
+
+    grid.innerHTML = '';
+    days.forEach(function(d) {
+        var ds    = d.toLocaleDateString('sv-SE', {timeZone:'Asia/Taipei'});
+        var isPast= d < today;
+        var isTdy = d.getTime() === today.getTime();
+        var isSel = ds === state.date;
+
+        var btn = document.createElement('div');
+        btn.className = 'wcal-day' + (isTdy?' today':'') + (isSel?' selected':'') + (isPast?' disabled':'');
+
+        var dow = document.createElement('div');
+        dow.className = 'wcal-dow';
+        dow.textContent = dows[d.getDay()];
+
+        var num = document.createElement('div');
+        num.className = 'wcal-num';
+        num.textContent = d.getDate();
+
+        btn.appendChild(dow);
+        btn.appendChild(num);
+
+        if (!isPast) {
+            btn.addEventListener('click', function() {
+                state.date = ds;
+                clearStepErr('date-err');
+                renderWeekCal();
+            });
+        }
+        grid.appendChild(btn);
+    });
+}
+
+function shiftWeek(dir) {
+    _wcalBase.setDate(_wcalBase.getDate() + dir * 7);
+    renderWeekCal();
+}
 
 var weekdayTimes = ["11:00","11:30","12:00","12:30","13:00","13:30","17:00","17:30","18:00","18:30","19:00","19:30","20:00","20:30"];
 var weekendTimes = ["11:00","11:30","12:00","12:30","13:00","13:30","14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30","18:00","18:30","19:00","19:30","20:00","20:30"];
@@ -1557,14 +1728,12 @@ function goStep2() {
         return;
     }
     clearStepErr('people-err');
-    var d = document.getElementById('dateInput').value;
-    if (!d) {
+    if (!state.date) {
         showStepErr('date-err', '請選擇預約日期');
-        triggerShake(document.getElementById('dateInput'));
+        triggerShake(document.getElementById('wcalGrid'));
         return;
     }
     clearStepErr('date-err');
-    state.date = d;
     state.time = '';
 
     // 更新 summary bar
@@ -1770,7 +1939,9 @@ function handleSubmit() {
             document.getElementById('note').value  = '';
             phoneHint.textContent = '';
             document.querySelectorAll('.people-btn').forEach(function(b) { b.classList.remove('selected'); });
-            document.getElementById('dateInput').value = '';
+            state.date = '';
+            _wcalBase = new Date(); _wcalBase.setHours(0,0,0,0);
+            renderWeekCal();
             document.getElementById('timeGrid').innerHTML = '';
             document.getElementById('timeHint').textContent = '';
             state = { people: '', date: '', time: '' };
@@ -1953,6 +2124,44 @@ function syncStickyStep(n) {
     }
 }
 
+// ── Hero 打字效果 ──
+function typeHeroSub() {
+    var el   = document.querySelector('.hero-sub');
+    var text = '楊梅瑞溪店 ｜ 線上預約申請';
+    el.innerHTML = '<span class="cursor"></span>';
+    var i = 0;
+    var cursor = el.querySelector('.cursor');
+    function tick() {
+        if (i < text.length) {
+            el.insertBefore(document.createTextNode(text[i]), cursor);
+            i++;
+            setTimeout(tick, i < 8 ? 60 : 45);
+        } else {
+            setTimeout(function() { cursor.style.display = 'none'; }, 1800);
+        }
+    }
+    setTimeout(tick, 600);
+}
+
+// ── 分享預約 ──
+function shareBooking() {
+    var name   = document.getElementById('rc-name').textContent;
+    var date   = document.getElementById('rc-date').textContent;
+    var time   = document.getElementById('rc-time').textContent;
+    var people = document.getElementById('rc-people').textContent;
+    var text   = '我在極禾優質鍋物（楊梅瑞溪店）預約了！\n📅 ' + date + '\n🕐 ' + time + '\n👥 ' + people + '\n\n極禾鍋物職人｜蔬食自助吧吃到飽';
+    if (navigator.share) {
+        navigator.share({ title: '極禾優質鍋物 預約資訊', text: text })
+            .catch(function(){});
+    } else {
+        navigator.clipboard.writeText(text).then(function() {
+            var btn = document.getElementById('shareBtn');
+            btn.textContent = '✓ 已複製到剪貼簿';
+            setTimeout(function() { btn.textContent = '📤 分享預約資訊給朋友'; }, 2500);
+        });
+    }
+}
+
 // ── 歡迎彈窗 ──
 function closeWelcome() {
     document.getElementById('welcomeModal').classList.remove('show');
@@ -1968,6 +2177,8 @@ window.addEventListener('load', function() {
         return;
     }
 
+    renderWeekCal();
+    typeHeroSub();
     setTimeout(function() {
         document.getElementById('welcomeModal').classList.add('show');
     }, 400);
